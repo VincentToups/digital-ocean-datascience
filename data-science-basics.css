@@ -1,0 +1,12 @@
+img {
+    max-width: 80%;
+}
+
+p {
+    max-width: 800px;
+}
+
+pre {
+    background-color: black;
+    color: white;
+}
