@@ -9,4 +9,5 @@ p {
 pre {
     background-color: black;
     color: white;
+    max-width: 800px;
 }
