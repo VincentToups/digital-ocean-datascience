@@ -16,10 +16,10 @@ therefor constitute the main part of that side of the course.
 
 Despite the fact that the university provides infrastructure for us to
 run docker containers and the fact that my own students all have
-laptops of one sort or another, almost everyone struggles with their
-infrastructure. Getting Docker running on Windows is a common problem
-and this year, with the introduction of Apple Silicon, getting a
-development environment going on a Mac has proven difficult for many
+laptops of one sort or another, almost everyone struggles with getting
+their environment going. Getting Docker running on Windows is a common
+problem and this year, with the introduction of Apple Silicon, getting
+a development environment going on a Mac has proven difficult for many
 students as well.
 
 And even if all those technical hurdles are lept, students may
@@ -51,7 +51,7 @@ probably want to deal with right now is adding some block storage. If
 we work on such a virtual disk, we can always spin up a beefier
 droplet later if we need to do bigger tasks. For most of my course,
 however, students are doing small-to-mid sized data science tasks. For
-most of these we can get away with a small machine.
+much of this work we can get away with a small machine.
 
 ![](block-storage.png)
 
@@ -87,7 +87,8 @@ The key's randomart image is:
 +----[SHA256]-----+
 ```
 
-The hand waving explanation for what an ssh key pair goes like this:
+The hand waving explanation for what an ssh key pair is goes like
+this:
 
 Its a pair of numbers: a public one and a private one. If I have the
 private one and you have the public one, I can prove to you I have the
@@ -131,10 +132,12 @@ machine from a new IP address, we can just log in to DO and modify our
 rules from anywhere.
 
 Use a convenient website like [ipchicken](https://ipchicken.com/) to
-find your IP address and put it in the Inbound Rules section of the
-page next to ssh. Delete the other two options to prevent other
-traffic from talking to your server. This isn't perfect security, but
-combined with our ssh key we should be a relatively thin target.
+find your (outward facing) IP address and put it in the Inbound Rules
+section of the page next to ssh. Delete the other two options to
+prevent other traffic from talking to your server. This isn't perfect
+security (usually many computers share the same outward facing IP
+address), but combined with our ssh key we should be a relatively thin
+target.
 
 ![](ssh-only-me.png)
 
@@ -145,17 +148,16 @@ HIT ME
 
 ![](hitme.gif)
 
-I have a confession to make: I'm a console cowboy. A lot of data
-science tutorials are all about Jupyter or RStudio, but the fact is I
-do all my data science and just about most everything else from
-Emacs. I encourage students to get comfortable on the command line,
-since otherwise graphical user interfaces will form a ceiling for
-their career. The justification for this idea is that data scientists
-need at least two things to succeed: data and the means to get their
-results in front of other people. If a data scientist has broad
-technical skills they can do both of these things without relying on
-other technical experts. Getting comfortable with the Unix command
-line is the seed for those other technical skills.
+A lot of data science tutorials are all about Jupyter or RStudio, but
+the fact is I do all my data science and just about most everything
+else from Emacs. I encourage students to get comfortable on the
+command line, since otherwise graphical user interfaces will form a
+ceiling for their career. The justification for this idea is that data
+scientists need at least two things to succeed: data and the means to
+get their results in front of other people. If a data scientist has
+broad technical skills they can do both of these things without
+relying on other technical experts. Getting comfortable with the Unix
+command line is the seed for those other technical skills.
 
 So let's ssh to our machine.
 
@@ -179,9 +181,9 @@ setting up this machine for whatever we were going to do with it. But
 today we're just going to install Docker.
 
 If you aren't familiar with system configuration, it can be hard to
-understand what Docker is good for but its not too hard to
-explain. When we do Data Science we depend on tools like Programming
-Languages (R, Python) and libraries associated with those
+understand what Docker is good for, but its not too hard to
+explain. When we do Data Science we depend on tools like programming
+languages (R, Python) and libraries associated with those
 languages. We may depend on other things more subtle (for example the
 way a particular operating system handles time). It can be a lot of
 work to set up a computer to support doing a particular data science
@@ -196,11 +198,11 @@ done poorly, and doing it right required quite a lot of expertise
 which isn't easy to come by.
 
 Docker is a tool which lets you describe an environment for doing work
-in a sort of fixed format (a Dockerfile). Given this file, Docker can
-recreate any particular system configuration you can make happen (and
-do it repeatedly). Once these little systems are created, you connect
-to them and do your work, comfortable in the more or less accurate
-belief that you can easily reproduce your environment. 
+in a fixed format (a Dockerfile). Given this file, Docker can recreate
+any particular system configuration you can make happen (and do it
+repeatedly). Once these little systems are created, you connect to
+them and do your work, comfortable in the more or less accurate belief
+that you can easily reproduce your environment.
 
 An added benefit is that you can maintain many small environments for
 many different projects, making taming complex dependencies much
@@ -307,18 +309,19 @@ docker run -d -p 8787:8787 -e PASSWORD=<type a password here> rocker/verse
 That will start a basic rocker/verse server in the background.
 
 Its worth saying a thing or two about the arguments we just passed
-docker. You can learn all about them from docker's documentation. But
-the important thing to think about at this very moment is the `-p`
-argument, which tells docker how to map ports "outside" the container
-to ports "inside" the container. What `-p 8787:8787` means is "connect
-anyone trying to connect to the port 8787 _outside_ the container to
+docker. You can learn all about them from [Docker's
+documentation](https://docs.docker.com/). But the important thing to
+think about at this very moment is the `-p` argument, which tells
+docker how to map ports "outside" the container to ports "inside" the
+container. What `-p 8787:8787` means is "connect anyone trying to
+connect to the port 8787 _outside_ the container to
 the port 8787 _inside_ the container."  
 
 A [port](https://en.wikipedia.org/wiki/Port_(computer_networking)) is
 just a number which different servers running on a computer use to
 listen for traffic. You use ports all the time but you've never
 thought about them because HTTP and HTTPS traffic occur on pre-defined
-ports (20 and 443, respectively) andy our browser just knows to use
+ports (20 and 443, respectively) and our browser just knows to use
 those ports by default. 
 
 Whe we started Docker scripts _inside_ the container started an
